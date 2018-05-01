@@ -15,3 +15,7 @@
   - dalam views, rename filename.html kita ke filename.handlebars.
   - refer jugak file: /testApp1.0/views/layouts/main.handlebars , /testApp1.0/views/partials/head.handlebars
   
+# Some changes in GUI (amal)
+
+- bagi smua page about, registration & login ada nav. bar.
+- ubah background color & logo
