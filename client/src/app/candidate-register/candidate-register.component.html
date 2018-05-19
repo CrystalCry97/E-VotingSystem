@@ -1,0 +1,57 @@
+<div class="page-header">
+  <br><br>
+  <div class="container">
+      <h3>
+          Candidate Registration
+      </h3>
+  </div>
+  <br>
+  
+    <div class="container">
+      <form (submit)= "addCandidate()">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" [(ngModel)]="cName" class="form-control" name="cName" />
+        </div>
+
+        <div class="form-group">
+          <label>Email</label>
+          <input type="text" [(ngModel)]="cEmail" class="form-control" name="cEmail" />
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label>Matric</label>
+                <input type="text" [(ngModel)]="cMatric" class="form-control" name="cMatric" />
+            </div>
+      
+            <div class="form-group col-md-6">
+              <label>Class</label>
+              <input type="text" [(ngModel)]="cClass" class="form-control" name="cClass" />
+            </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+              <label>Organization</label>
+              <input type="text" [(ngModel)]="cOrganization" class="form-control" name="cMatric" />
+          </div>
+    
+          <div class="form-group col-md-6">
+            <label>Position</label>
+            <input type="text" [(ngModel)]="cPosition" class="form-control" name="cPosition" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" [(ngModel)]="cPassword" class="form-control" name="cPassword" />
+        </div>
+        <br>
+
+        <input class="btn btn btn-success" type="submit" value="Add" >
+
+      </form>
+    </div>
+ 
+</div>

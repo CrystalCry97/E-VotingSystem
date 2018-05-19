@@ -1,49 +1,48 @@
-//==================import=======================
-var express = require('express');
-var app = express(); //constructor
-var handlebars = require('express-handlebars').create({defaultLayout:'main'});
-var formidable = require('formidable');
-var credentials = require('./cred.js');
+//importing modules
+var express= require('express');
 var mongoose = require('mongoose');
-var dbconfig = require('./config/database.js');
-var passport = require('passport');
-var session = require('express-session');
+var bodyparser = require('body-parser');
+var cors= require('cors');
+var path = require('path');
 
-//==================configure=======================
-app.engine('handlebars', handlebars.engine);
-app.set('view engine', 'handlebars');
-app.disable('x-powered-by');
-app.set('port',process.env.PORT|| 8080); //set port variable for the web server
-mongoose.connect(dbconfig.url);// connect to mongodb server
+var app = express();
 
-//================ middleware ======================
-app.use(require('cookie-parser')(credentials.cookieSecret)); //read cookies for authentication.
-app.use(express.static(__dirname + '/public'));
-app.use(require('body-parser').urlencoded({extended:true})); //get information from html <form>
+const route = require('./routes/route'); //call route.js
 
-app.use(function(req,res,next){
-  console.log("User is looking for URL: "+ req.url);
-  next();
+//connect to mongodb
+mongoose.connect('mongodb://localhost:27017/candidatelist');
+
+//on connection
+mongoose.connection.on('connected',()=>{
+    console.log('Connected to database mongodb @ port: 27017');
+});
+mongoose.connection.on('error',(err)=>{
+    if(err)
+    {
+        console.log('Error in database connection');
+    }
 });
 
-app.get('/bin', function(req,res,next){
-  console.log("User Tried to access /bin");
-  throw new Error('/bin doesn\'t exist');
+//port no
+const port= 8080;
+
+//adding middleware - cors
+app.use(cors());
+
+//body -parser
+app.use(bodyparser.json());
+
+//static files
+app.use(express.static(path.join(__dirname,'public')));
+
+//routes
+app.use('/api',route);
+
+//testing
+app.get('/',(req,res)=>{
+    res.send('Foobar');
 });
-//catch Error
-app.use(function(err,req,res,next){
-  console.log('Error:' + err.message);
-  next();
+
+app.listen(port,()=>{
+    console.log('Server started at port: '+port);
 });
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-//================ routes ==========================
-require('./routes/routes.js')(app, passport);
-
-
-//================== start server ======================
-app.listen(app.get('port'),function(){
-  console.log("Server started on port 8080");
-})

@@ -1,0 +1,10 @@
+h3{
+    text-align: center;
+}
+p {
+    text-indent: 50px;
+    text-align: justify;
+    text-justify: inter-word;
+    padding-left: 100px;
+    padding-right: 100px;
+}
